@@ -1,0 +1,54 @@
+{
+  "server": {
+    "port": 1080,
+    "enable_https": false,
+    "log_level": "info",
+    "report_interval": 30
+  },
+  "rules": [
+    {
+      "name": "Google拦截",
+      "pattern": ".*google\\.com.*",
+      "response_body": "\n\t\t\t\t\t\u003chtml\u003e\n\t\t\t\t\t\u003chead\u003e\u003ctitle\u003e被拦截的页面\u003c/title\u003e\u003c/head\u003e\n\t\t\t\t\t\u003cbody\u003e\n\t\t\t\t\t\t\u003ch1\u003e此页面已被SOCKS5代理拦截\u003c/h1\u003e\n\t\t\t\t\t\t\u003cp\u003e原始请求已被修改\u003c/p\u003e\n\t\t\t\t\t\t\u003cp\u003e规则: Google拦截\u003c/p\u003e\n\t\t\t\t\t\t\u003cp\u003e时间: {{.Time}}\u003c/p\u003e\n\t\t\t\t\t\u003c/body\u003e\n\t\t\t\t\t\u003c/html\u003e\n\t\t\t\t",
+      "status_code": 200,
+      "headers": {
+        "X-Proxy-Modified": "true",
+        "X-Proxy-Rule": "Google拦截"
+      },
+      "enabled": true
+    },
+    {
+      "name": "百度重定向",
+      "pattern": ".*baidu\\.com.*",
+      "response_body": "\n\t\t\t\t\t\u003chtml\u003e\n\t\t\t\t\t\u003chead\u003e\u003ctitle\u003e百度访问被重定向\u003c/title\u003e\u003c/head\u003e\n\t\t\t\t\t\u003cbody\u003e\n\t\t\t\t\t\t\u003ch1\u003e百度搜索请求被拦截\u003c/h1\u003e\n\t\t\t\t\t\t\u003cp\u003e这是一个自定义的响应页面\u003c/p\u003e\n\t\t\t\t\t\t\u003cp\u003e原始URL被规则匹配并修改\u003c/p\u003e\n\t\t\t\t\t\t\u003cp\u003e规则: 百度重定向\u003c/p\u003e\n\t\t\t\t\t\u003c/body\u003e\n\t\t\t\t\t\u003c/html\u003e\n\t\t\t\t",
+      "status_code": 200,
+      "headers": {
+        "X-Custom-Header": "Modified by SOCKS5 Proxy",
+        "X-Proxy-Rule": "百度重定向"
+      },
+      "enabled": true
+    },
+    {
+      "name": "社交媒体拦截",
+      "pattern": ".*(facebook|twitter|instagram|tiktok)\\.com.*",
+      "response_body": "\n\t\t\t\t\t\u003chtml\u003e\n\t\t\t\t\t\u003chead\u003e\u003ctitle\u003e社交媒体访问被限制\u003c/title\u003e\u003c/head\u003e\n\t\t\t\t\t\u003cbody\u003e\n\t\t\t\t\t\t\u003ch1\u003e社交媒体访问被限制\u003c/h1\u003e\n\t\t\t\t\t\t\u003cp\u003e根据策略，此类网站访问被限制\u003c/p\u003e\n\t\t\t\t\t\t\u003cp\u003e如需访问，请联系管理员\u003c/p\u003e\n\t\t\t\t\t\u003c/body\u003e\n\t\t\t\t\t\u003c/html\u003e\n\t\t\t\t",
+      "status_code": 403,
+      "headers": {
+        "X-Proxy-Blocked": "true",
+        "X-Proxy-Rule": "社交媒体拦截"
+      },
+      "enabled": false
+    },
+    {
+      "name": "广告拦截",
+      "pattern": ".*(ads|advertisement|banner|popup).*",
+      "response_body": "",
+      "status_code": 204,
+      "headers": {
+        "X-Proxy-Blocked": "true",
+        "X-Proxy-Rule": "广告拦截"
+      },
+      "enabled": true
+    }
+  ]
+}
